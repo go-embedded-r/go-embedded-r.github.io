@@ -1,0 +1,111 @@
+baseURL = 'https://go-embedded-r.github.io/'
+locale  = 'en-us'
+title   = 'go-embedded-r'
+# No theme -- the layout is the go-* family template: one self-contained
+# layouts/index.html, and the shared design (styles, theme toggle, fork ribbon,
+# icons) imported as the Hugo module github.com/go-fleettools/landingkit,
+# pinned in go.mod.
+
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[module]
+  [[module.imports]]
+    path = "github.com/go-fleettools/landingkit"
+
+[params]
+  description = "go-embedded-r (in development, r v0.1.0: milestones M0, the oracle harness, and M1, the parser, are done; M2 to M8 are planned): an R interpreter in pure Go that can be embedded, for the r cells of go-notebook and its WebAssembly playground."
+
+# Every field below is rendered by layouts/index.html. A field nothing renders
+# does not stay true. Every statement is from the README of go-embedded-r/r at
+# v0.1.0 and from the plan it links, bib/r.md (go-scikit/roadmap).
+[[params.repos]]
+  name  = "r"
+  kind  = "source"
+  href  = "https://github.com/go-embedded-r/r"
+  blurb = "The interpreter, <code>github.com/go-embedded-r/r</code>, released as v0.1.0 (2026-11-02): M0, the oracle harness against GNU R 4.6.2 (<code>internal/oracle</code>, <code>cmd/roracle</code>, the <code>rds</code> serialization reader and writer, golden files), and M1, the parser (package <code>syntax</code>). Everything after the parser is planned."
+[[params.repos]]
+  name  = "docs"
+  kind  = "site"
+  href  = "https://go-embedded-r.github.io/docs/"
+  blurb = "The documentation (Hugo + Hextra): the plan and its milestones, what the repository holds today, the parser's parity with R 4.6.2, and the licence rule. <a href=\"https://github.com/go-embedded-r/docs\">Source →</a>"
+
+# The cards of #scope.
+[[params.scope]]
+  name = "An R interpreter in pure Go"
+  what = "<code>github.com/go-embedded-r/r</code> is the start of an R implementation written in Go (<code>CGO_ENABLED=0</code>), meant to be embedded in Go programs and to run in the browser through WebAssembly."
+[[params.scope]]
+  name = "For go-notebook"
+  what = "It will back the <code>r</code> cells of go-notebook, the way julia backs its Julia cells and rbgo its Ruby cells."
+[[params.scope]]
+  name = "R is the oracle"
+  what = "Every stage is checked against the reference implementation, the pinned <b>GNU R 4.6.2</b> (CRAN tarball, SVN revision 90784), never against expectations written by hand. R runs as a black box and what it prints is recorded."
+[[params.scope]]
+  name = "A parser, today"
+  what = "Package <code>syntax</code>: lexer, parser, an AST with a source map, the tokens of <code>getParseData()</code>, R's own parse errors byte for byte, and <code>TopLevelNames</code>, which names what a cell assigns and reads."
+[[params.scope]]
+  name = "The serialization format"
+  what = "<code>rds</code> reads and writes R's serialization format (XDR, versions 2 and 3, gzip or bzip2): a decoded value encodes back to the same bytes. The decoder is built for untrusted input and fuzzed."
+[[params.scope]]
+  name = "Clean room, BSD-3-Clause"
+  what = "R's sources are GPL-2-or-later. R is an oracle, never a source: no R source file, test file, help page or transcript is copied here, and base R's R code is rewritten from the documented behaviour, not copied."
+
+# The cards of #milestones, in order. state is "done" or "planned".
+[[params.milestones]]
+  id    = "M0"
+  name  = "Oracle harness"
+  state = "done"
+  what  = "<code>internal/oracle</code> starts one <code>Rscript --vanilla</code> process (the pinned release; any other version is refused) and talks to it in R's own serialization; <code>rds</code> reads and writes that format; <code>cmd/roracle</code> regenerates the golden files. The tests replay the goldens without R, and with R they check that R reads Go's bytes back unchanged."
+[[params.milestones]]
+  id    = "M1"
+  name  = "Parser"
+  state = "done"
+  what  = "Package <code>syntax</code>, released in v0.1.0: <code>syntax.ParseAll(src)</code> and <code>syntax.TopLevelNames(cell)</code>. Tree, tokens and error text are compared with R 4.6.2 (see the parity table below). Bounded in bytes, depth and nodes. Known gaps: no Go <code>deparse</code> printer yet, the effect of <code>#line</code> directives on later error lines, and <code>parse(file=)</code> encoding options."
+[[params.milestones]]
+  id    = "M2 – M8"
+  name  = "Evaluator, base, stats, regex, graphics, notebook bridge, wasm playground, CRAN ports"
+  state = "planned"
+  what  = "Planned, not started: the evaluator, base, stats, regex, graphics, the notebook bridge, the WebAssembly playground and CRAN ports. The plan is <code>bib/r.md</code> of go-scikit/roadmap."
+
+# The rows of #parity: the table of the README of go-embedded-r/r at v0.1.0.
+[[params.parity]]
+  name = "R's base packages: 842 files"
+  what = "Every <code>.R</code> file of <code>src/library</code> (7.8 MB): 844 inputs, 842 parse and 2 are rejected. Tree <b>842 / 842</b>, tokens <b>842 / 842</b>, error text byte for byte <b>2 / 2</b>."
+[[params.parity]]
+  name = "R's tests: 94 files"
+  what = "95 files, 1 is not UTF-8 and is skipped: 94 inputs, 90 parse and 4 are rejected. Tree <b>90 / 90</b>, tokens <b>90 / 90</b>, error text <b>4 / 4</b>."
+[[params.parity]]
+  name = "Our own corpora"
+  what = "42 snippets: tree and tokens 42 / 42. 52 error cases: 51 / 51 identical error texts. 93 edge cases (Unicode, raw strings, <code>|></code>, <code>\\(x)</code>, <code>->></code>, hex, <code>L</code> and <code>i</code> numbers): 90 / 90, errors 3 / 3. 117 odd inputs (CRLF, tabs, bidi controls, invalid UTF-8): 81 / 81, errors 36 / 36."
+[[params.parity]]
+  name = "190 000 differential fuzz inputs"
+  what = "Random edits of lines of R's sources (seeds 1, 2 and 11), about two thirds rejected: tree, tokens and error text all identical."
+[[params.parity]]
+  name = "100 000 decimal literals"
+  what = "Random, up to 20 digits, exponents -330 to 330: 100 000 identical doubles. They match R on macOS arm64 (fused multiply-add, 64-bit <code>long double</code>); R on x86-64 Linux accumulates in 80-bit precision and can differ in the last place. Those literals are compared within 16 ulp and kept out of the goldens."
+[[params.parity]]
+  name = "Speed: 0.80 of R"
+  what = "One core each, interleaved rounds, median of 11, 1-minute load 7.8 on an Apple M-series laptop: the 842 files of <code>src/library</code> (7.8 MB) take 0.214 s in Go (<code>syntax.ParseAll</code>, which also builds the source map and the token list) and 0.269 s in R's <code>parse(text =, keep.source = FALSE)</code>. Go/R = 0.80."
+
+[params.brand]
+# Generated by go-fleettools/landingkit from static/img/logo.svg: the colours are
+# READ from the logo's gradient, never chosen. Do not add other keys:
+# neutrals (backgrounds, surfaces, greys) belong to the shared sheet.
+# Contrast: base on white 7.99:1, bright on the dark background 7.91:1.
+  base = "#1f4e9c"
+  deep = "#13305f"
+  bright = "#6fa8f5"
+  shadow = "rgba(31,78,156,.7)"
+  glow = "rgba(31,78,156,.6)"
+  wash = "rgba(31,78,156,.10)"
+  washDeep = "rgba(19,48,95,.06)"
+  chipBg = "#eef5fe"
+  chipBorder = "#d4e5fc"
+  chipFg = "#13305f"
+  chipBgDark = "rgba(111,168,245,.14)"
+  chipBorderDark = "rgba(111,168,245,.32)"
+  chipFgDark = "#b0cffa"
+  statsEnd = "#dceafd"
+  bandText = "#e8f1fd"

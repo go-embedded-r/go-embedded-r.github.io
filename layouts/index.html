@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Site.Title }} — R, embedded in Go. In development.</title>
+<meta name="description" content="{{ .Site.Params.description }}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{{ partial "styles.html" . }}
+</head>
+<body class="lm">
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img class="glyph" src="/img/logo.svg" width="32" height="32" alt="go-embedded-r logo"> {{ .Site.Title }}</a>
+    <nav><a href="#scope">Scope</a><a href="#milestones">Milestones</a><a href="#parity">Parity</a><a href="#repos">Repositories</a></nav>
+    {{ partial "theme-toggle.html" . }}
+  </div></header>
+  {{ partial "fork-ribbon.html" "https://github.com/go-embedded-r" }}
+
+  <div class="hero"><div class="wrap">
+    <div>
+      <h1 class="head">R, embedded in Go.<br><span class="accent">Checked against GNU R 4.6.2, never against guesses.</span></h1>
+      <p class="sub">go-embedded-r is <b>in development</b>, and its parser is released: <b>v0.1.0</b> (2026-11-02) completes milestones <b>M0</b> (the oracle harness, against GNU R 4.6.2) and <b>M1</b> (the parser, package <code>syntax</code>), identical to R's tree, tokens and error text on 842 of 842 files of R's base packages. The evaluator, base, stats, regex, graphics, the notebook bridge, the playground and CRAN ports (M2 to M8) are <b>planned</b>. It will be a pure-Go, embeddable R interpreter for the <code>r</code> cells of <a href="https://go-notebook.github.io/">go-notebook</a> and its WebAssembly playground, written clean-room under the BSD-3-Clause licence.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://go-embedded-r.github.io/docs/">{{ partial "icons/book.html" . }}Read the plan →</a>
+        <a class="btn btn-ghost" href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">{{ partial "icons/github.html" . }}The plan in the roadmap →</a>
+      </div>
+      <div class="trust"><span><b>v0.1.0</b>: M0, M1 done</span><span><b>M2 – M8</b> planned</span><span><b>pure Go</b></span></div>
+    </div>
+    <div class="term">
+      <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">status</span></div>
+<pre style="white-space:pre;overflow-x:auto;tab-size:4">release   v0.1.0 (2026-11-02)
+done      M0 oracle harness (R 4.6.2)
+done      M1 parser: 842/842 files
+planned   M2 - M8 evaluator ... CRAN
+goal      r cells in go-notebook
+oracle    GNU R 4.6.2, a black box
+licence   BSD-3-Clause, clean room
+plan      github.com/go-scikit/roadmap</pre>
+    </div>
+  </div></div>
+
+  <div class="strip"><div class="wrap">
+    <span class="lead-line">{{ len .Site.Params.repos }} repositories — released <b>v0.1.0</b>: the oracle harness and the parser (M0 and M1 done); everything after the parser is planned</span>
+    <div class="mods">{{ range .Site.Params.repos }}<a href="{{ .href }}">{{ .name }}</a>{{ end }}</div>
+  </div></div>
+
+  <section id="scope"><div class="wrap">
+    <span class="eyebrow">What it is</span>
+    <h2>R's semantics, written in Go.</h2>
+    <p class="lead">What exists is a parser and an oracle harness. The rest is the plan of the roadmap's <a href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">bibliography</a>, not a result.</p>
+    <div class="grid">
+      {{ range .Site.Params.scope }}
+      <div class="card"><h3>{{ .name }}</h3><p>{{ .what | safeHTML }}</p></div>
+      {{ end }}
+    </div>
+  </div></section>
+
+  <section id="milestones" style="padding-top:10px"><div class="wrap">
+    <span class="eyebrow">The plan</span>
+    <h2>From an oracle to a playground.</h2>
+    <p class="lead">M0 and M1 are done. M2 to M8 are planned and not started.</p>
+    <div class="road">
+      {{ range .Site.Params.milestones }}
+      <div class="ph">
+        <div class="top"><h4>{{ .id }} · {{ .name }}</h4><span class="tag active">{{ .state }}</span></div>
+        <p>{{ .what | safeHTML }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div></section>
+
+  <section id="parity" style="padding-top:10px"><div class="wrap">
+    <span class="eyebrow">M1 parity with R 4.6.2</span>
+    <h2>The parser, judged by the oracle.</h2>
+    <p class="lead">The same text is parsed by R and by Go, and the terminal tokens, the tree and the error text are compared (<code>go run ./cmd/rparity</code>). R's own sources are read where they are unpacked and never committed.</p>
+    <div class="grid">
+      {{ range .Site.Params.parity }}
+      <div class="card"><h3>{{ .name }}</h3><p>{{ .what | safeHTML }}</p></div>
+      {{ end }}
+    </div>
+  </div></section>
+
+  <section id="scope-honest" style="padding-top:20px"><div class="wrap">
+    <div class="band">
+      <h2>R is an oracle, never a source.</h2>
+      <p>The sources of R are GPL-2-or-later and this project is BSD-3-Clause. No R source file, test file, help page, <code>.Rout.save</code> transcript or text of R's manuals is copied, and none is downloaded at run time. The golden files are the answers of R 4.6.2 to inputs written here. Contributors work from specifications: the <i>R Language Definition</i>, the <i>R Internals</i> manual, the help pages and the oracle's behaviour.</p>
+      <a class="btn btn-ghost" href="https://go-embedded-r.github.io/docs/">{{ partial "icons/book.html" . }}The plan, the parser and the licence →</a>
+    </div>
+  </div></section>
+
+  <section id="repos" style="padding-top:6px"><div class="wrap">
+    <span class="eyebrow">Repositories</span>
+    <h2>What is here.</h2>
+    <p class="lead">The organization holds the interpreter's repository, <a href="https://github.com/go-embedded-r/r">r</a>, and its landing and documentation.</p>
+    <div class="road">
+      {{ range .Site.Params.repos }}
+      <div class="ph">
+        <div class="top"><h4><a href="{{ .href }}">{{ .name }}</a></h4><span class="tag active">{{ .kind }}</span></div>
+        <p>{{ .blurb | safeHTML }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div></section>
+
+  <footer><div class="wrap"><span>go-embedded-r · <a href="https://github.com/go-embedded-r">go-embedded-r on GitHub</a>{{ if not (partial "mantra-on.html" .) }} · BSD-3-Clause · CGO_ENABLED=0{{ end }}</span><span>v0.1.0 · M0, M1 done · M2 – M8 planned</span></div></footer>
+</body>
+</html>
