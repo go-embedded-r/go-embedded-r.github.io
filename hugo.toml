@@ -43,6 +43,9 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
   name = "R is the oracle"
   what = "Every stage is checked against the reference implementation, the pinned <b>GNU R 4.6.2</b> (CRAN tarball, SVN revision 90784), never against expectations written by hand. R runs as a black box and what it prints is recorded."
 [[params.scope]]
+  name = "R cells in go-notebook, parsed not run"
+  what = "R cells are live in <a href=\"https://github.com/go-notebook/notebook/releases/tag/v0.8.0\">go-notebook v0.8.0</a> and <a href=\"https://github.com/go-notebook/playground/releases/tag/v0.9.0\">playground v0.9.0</a>: they are parsed and checked, not run yet. Running them needs the evaluator, which is planned."
+[[params.scope]]
   name = "A parser, today"
   what = "Package <code>syntax</code>: lexer, parser, an AST with a source map, the tokens of <code>getParseData()</code>, R's own parse errors byte for byte, and <code>TopLevelNames</code>, which names what a cell assigns and reads."
 [[params.scope]]
