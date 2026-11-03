@@ -16,16 +16,16 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
     path = "github.com/go-fleettools/landingkit"
 
 [params]
-  description = "go-embedded-r (in development, r v0.1.0: milestones M0, the oracle harness, and M1, the parser, are done; M2 to M8 are planned): an R interpreter in pure Go that can be embedded, for the r cells of go-notebook and its WebAssembly playground."
+  description = "go-embedded-r (in development, r v0.2.0: milestones M0, the oracle harness, and M1, the parser with deparse, are done; M2, the evaluator, is in progress; M3 to M8 are planned): an R interpreter in pure Go that can be embedded, for the r cells of go-notebook and its WebAssembly playground."
 
 # Every field below is rendered by layouts/index.html. A field nothing renders
 # does not stay true. Every statement is from the README of go-embedded-r/r at
-# v0.1.0 and from the plan it links, bib/r.md (go-scikit/roadmap).
+# main (v0.2.0) and docs/m2-design.md, and from the plan it links, bib/r.md (go-scikit/roadmap).
 [[params.repos]]
   name  = "r"
   kind  = "source"
   href  = "https://github.com/go-embedded-r/r"
-  blurb = "The interpreter, <code>github.com/go-embedded-r/r</code>, released as v0.1.0 (2026-11-02): M0, the oracle harness against GNU R 4.6.2 (<code>internal/oracle</code>, <code>cmd/roracle</code>, the <code>rds</code> serialization reader and writer, golden files), and M1, the parser (package <code>syntax</code>). Everything after the parser is planned."
+  blurb = "The interpreter, <code>github.com/go-embedded-r/r</code>, released as v0.2.0 (2026-11-03): M0, the oracle harness against GNU R 4.6.2 (<code>internal/oracle</code>, <code>cmd/roracle</code>, the <code>rds</code> serialization reader and writer, golden files), and M1, the parser and <code>deparse</code> (package <code>syntax</code>). M2, the evaluator (package <code>eval</code>), is in progress: its first slice is on main, not tagged. Everything after is planned."
 [[params.repos]]
   name  = "docs"
   kind  = "site"
@@ -46,8 +46,11 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
   name = "R cells in go-notebook, parsed not run"
   what = "R cells are live in <a href=\"https://github.com/go-notebook/notebook/releases/tag/v0.8.0\">go-notebook v0.8.0</a> and <a href=\"https://github.com/go-notebook/playground/releases/tag/v0.9.0\">playground v0.9.0</a>: they are parsed and checked, not run yet. Running them needs the evaluator, which is planned."
 [[params.scope]]
-  name = "A parser, today"
-  what = "Package <code>syntax</code>: lexer, parser, an AST with a source map, the tokens of <code>getParseData()</code>, R's own parse errors byte for byte, and <code>TopLevelNames</code>, which names what a cell assigns and reads."
+  name = "A parser and deparse, today"
+  what = "Package <code>syntax</code>: lexer, parser, an AST with a source map, the tokens of <code>getParseData()</code>, R's own parse errors byte for byte, <code>Deparse</code>, and <code>TopLevelNames</code>, which names what a cell assigns and reads."
+[[params.scope]]
+  name = "An evaluator, started"
+  what = "Package <code>eval</code>: slice 1 of M2 is on main, not tagged yet: 71 of R's 210 primitives, judged by the oracle (314 of 314 goldens). It is not in a release."
 [[params.scope]]
   name = "The serialization format"
   what = "<code>rds</code> reads and writes R's serialization format (XDR, versions 2 and 3, gzip or bzip2): a decoded value encodes back to the same bytes. The decoder is built for untrusted input and fuzzed."
@@ -63,19 +66,24 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
   what  = "<code>internal/oracle</code> starts one <code>Rscript --vanilla</code> process (the pinned release; any other version is refused) and talks to it in R's own serialization; <code>rds</code> reads and writes that format; <code>cmd/roracle</code> regenerates the golden files. The tests replay the goldens without R, and with R they check that R reads Go's bytes back unchanged."
 [[params.milestones]]
   id    = "M1"
-  name  = "Parser"
+  name  = "Parser and deparse"
   state = "done"
-  what  = "Package <code>syntax</code>, released in v0.1.0: <code>syntax.ParseAll(src)</code> and <code>syntax.TopLevelNames(cell)</code>. Tree, tokens and error text are compared with R 4.6.2 (see the parity table below). Bounded in bytes, depth and nodes. Known gaps: no Go <code>deparse</code> printer yet, the effect of <code>#line</code> directives on later error lines, and <code>parse(file=)</code> encoding options."
+  what  = "Package <code>syntax</code>: the parser in v0.1.0, <code>deparse</code> in v0.2.0. <code>syntax.ParseAll(src)</code>, <code>syntax.TopLevelNames(cell)</code> and <code>syntax.Deparse(expr, nil)</code>. Tree, tokens, error text and deparse output are compared with R 4.6.2 (see the parity table below). Bounded in bytes, depth and nodes. Known gaps: the effect of <code>#line</code> directives on later error lines, <code>parse(file=)</code> encoding options, and the platform divergences of numeric constants in deparse (<code>exp10</code> on macOS, 80-bit <code>long double</code> on x86-64)."
 [[params.milestones]]
-  id    = "M2 – M8"
-  name  = "Evaluator, base, stats, regex, graphics, notebook bridge, wasm playground, CRAN ports"
+  id    = "M2"
+  name  = "Evaluator core"
+  state = "in progress"
+  what  = "Package <code>eval</code>. Slice 1 is merged on main (pull request 5), <b>not tagged yet</b>: values, environments, promises, closures with R's argument matching, control flow, and <b>71 of R's 210 primitives</b>. Judged by the oracle: 314 of 314 goldens, 179 998 of 180 000 differential fuzz expressions. Next slices: complex assignment targets (<code>x[i] &lt;- v</code>), S3 dispatch, the condition system. The design is <code>docs/m2-design.md</code> of go-embedded-r/r."
+[[params.milestones]]
+  id    = "M3 – M8"
+  name  = "Base, stats, regex, graphics, notebook bridge, wasm playground, CRAN ports"
   state = "planned"
-  what  = "Planned, not started: the evaluator, base, stats, regex, graphics, the notebook bridge, the WebAssembly playground and CRAN ports. The plan is <code>bib/r.md</code> of go-scikit/roadmap."
+  what  = "Planned, not started: base, stats, regex, graphics, the notebook bridge, the WebAssembly playground and CRAN ports. The plan is <code>bib/r.md</code> of go-scikit/roadmap."
 
-# The rows of #parity: the table of the README of go-embedded-r/r at v0.1.0.
+# The rows of #parity: the table of the README of go-embedded-r/r on main (v0.2.0).
 [[params.parity]]
   name = "R's base packages: 842 files"
-  what = "Every <code>.R</code> file of <code>src/library</code> (7.8 MB): 844 inputs, 842 parse and 2 are rejected. Tree <b>842 / 842</b>, tokens <b>842 / 842</b>, error text byte for byte <b>2 / 2</b>."
+  what = "Every <code>.R</code> file of <code>src/library</code> (7.8 MB): 844 inputs, 842 parse and 2 are rejected. Tree <b>842 / 842</b>, tokens <b>842 / 842</b>, deparse <b>842 / 842</b>, error text byte for byte <b>2 / 2</b>. On R's <code>tests/</code> (90 files that parse): tree, tokens and deparse <b>90 / 90</b>. Deparse differs from R in the last digit for 5 of 100 000 random literals beyond exponent 200 (<code>exp10</code> on macOS), and, on x86-64 Linux, in 6 of the 90 files of <code>tests/</code> (80-bit <code>long double</code>)."
 [[params.parity]]
   name = "R's tests: 94 files"
   what = "95 files, 1 is not UTF-8 and is skipped: 94 inputs, 90 parse and 4 are rejected. Tree <b>90 / 90</b>, tokens <b>90 / 90</b>, error text <b>4 / 4</b>."

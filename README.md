@@ -4,13 +4,14 @@ The go-embedded-r landing page (Hugo), served at <https://go-embedded-r.github.i
 The documentation is at <https://go-embedded-r.github.io/docs/> (repository
 [go-embedded-r/docs](https://github.com/go-embedded-r/docs)).
 
-The organization is **in development**. `go-embedded-r/r` v0.1.0 (2026-11-02)
+The organization is **in development**. `go-embedded-r/r` v0.2.0 (2026-11-03)
 completes milestones M0 (the oracle harness, against GNU R 4.6.2) and M1 (the
-parser, package `syntax`, identical to R's tree, tokens and error text on 842 of
-842 files of R's base packages). M2 to M8 are planned, and the page says so. It
+parser and deparse, package `syntax`, identical to R's tree, tokens and deparse
+output on 842 of 842 files of R's base packages). M2 (the evaluator) is in
+progress, its first slice on main and not tagged; M3 to M8 are planned, and the page says so. It
 gives what exists, the milestones, the parity table of the parser and the
 clean-room rule (R is an oracle, never a source; BSD-3-Clause). Its statements
-come from the README of go-embedded-r/r at v0.1.0 and from the plan it links,
+come from the README of go-embedded-r/r on main and its `docs/m2-design.md`, and from the plan it links,
 `bib/r.md` in [go-scikit/roadmap](https://github.com/go-scikit/roadmap). There is
 no playground yet, so there is no playground button.
 
