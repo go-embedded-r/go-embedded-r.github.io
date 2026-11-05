@@ -4,7 +4,7 @@ The go-embedded-r landing page (Hugo), served at <https://go-embedded-r.github.i
 The documentation is at <https://go-embedded-r.github.io/docs/> (repository
 [go-embedded-r/docs](https://github.com/go-embedded-r/docs)).
 
-The organization is **in development**. `go-embedded-r/r` v0.3.0 (2026-11-04)
+The organization is **in development**. `go-embedded-r/r` v0.4.0 (2026-11-05)
 completes milestones M0 (the oracle harness, against GNU R 4.6.2) and M1 (the
 parser and deparse, package `syntax`, identical to R's tree, tokens and deparse
 output on 842 of 842 files of R's base packages). slices 1 and 2 of M2 (the evaluator, 94 of 210
