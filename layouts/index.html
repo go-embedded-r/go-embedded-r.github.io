@@ -19,20 +19,21 @@
   <div class="hero"><div class="wrap">
     <div>
       <h1 class="head">R, embedded in Go.<br><span class="accent">Checked against GNU R 4.6.2, never against guesses.</span></h1>
-      <p class="sub">go-embedded-r is <b>in development</b>: <b>v0.4.0</b> (2026-11-05) completes milestones <b>M0</b> (the oracle harness, against GNU R 4.6.2) and <b>M1</b> (the parser and <code>deparse</code>, package <code>syntax</code>), identical to R's tree, tokens and deparse output on 842 of 842 files of R's base packages, and slices <b>1 and 2 of M2</b>: the evaluator (package <code>eval</code>) has 94 of R's 210 primitives and 32 base closures, with replacement, subsetting, attributes, S3 dispatch, conditions and <code>print</code>, and 819 of 819 goldens match R 4.6.2. Since v0.4.0 a session is <b>bounded by default</b> (a breaking change): 30 000 000 steps, 16 GiB of cumulative allocation and 10 s per evaluation, with <code>eval.Unbounded</code> to opt out. Base, stats, regex, graphics, the notebook bridge, the playground and CRAN ports (M3 to M8) are <b>planned</b>. R cells are live in go-notebook v0.8.0 and playground v0.9.0: parsed and checked, not run yet. It will be a pure-Go, embeddable R interpreter for the <code>r</code> cells of <a href="https://go-notebook.github.io/">go-notebook</a> and its WebAssembly playground, written clean-room under the BSD-3-Clause licence.</p>
+      <p class="sub">go-embedded-r is <b>in development</b>: <b>v0.5.0</b> (2026-11-05) completes milestones <b>M0</b> (the oracle harness, against GNU R 4.6.2) and <b>M1</b> (the parser and <code>deparse</code>, package <code>syntax</code>), identical to R's tree, tokens and deparse output on 842 of 842 files of R's base packages, and slices <b>1 to 3 of M2</b>: the evaluator (package <code>eval</code>) has 102 of R's 210 primitives and 94 base closures, with replacement, subsetting, attributes, S3 dispatch, conditions, <code>print</code>, environments as values, the apply family, string functions and regular expressions, and 1 035 of 1 035 goldens match R 4.6.2. <b>Regular expressions are an approximation on Go's <code>regexp</code>, not TRE</b> (lazy quantifiers, capture priority in repeated groups and <code>\&lt;</code>/<code>\&gt;</code> differ from R; back-references are refused); a faithful TRE port is in progress for v0.6.0. Since v0.4.0 a session is <b>bounded by default</b> (a breaking change): 30 000 000 steps, 16 GiB of cumulative allocation and 10 s per evaluation, with <code>eval.Unbounded</code> to opt out. Base, stats, regex, graphics, the notebook bridge, the playground and CRAN ports (M3 to M8) are <b>planned</b>. R cells are live in go-notebook v0.8.0 and playground v0.9.0: parsed and checked, not run yet. It will be a pure-Go, embeddable R interpreter for the <code>r</code> cells of <a href="https://go-notebook.github.io/">go-notebook</a> and its WebAssembly playground, written clean-room under the BSD-3-Clause licence.</p>
       <div class="cta">
         <a class="btn btn-primary" href="https://go-embedded-r.github.io/docs/">{{ partial "icons/book.html" . }}Read the plan →</a>
         <a class="btn btn-ghost" href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">{{ partial "icons/github.html" . }}The plan in the roadmap →</a>
       </div>
-      <div class="trust"><span><b>v0.4.0</b>: M0, M1 done</span><span><b>M2</b> slices 1–2 done</span><span><b>M3 – M8</b> planned</span><span><b>pure Go</b></span></div>
+      <div class="trust"><span><b>v0.5.0</b>: M0, M1 done</span><span><b>M2</b> slices 1–3 done</span><span><b>M3 – M8</b> planned</span><span><b>pure Go</b></span></div>
     </div>
     <div class="term">
       <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">status</span></div>
-<pre style="white-space:pre;overflow-x:auto;tab-size:4">release   v0.4.0 (2026-11-05)
+<pre style="white-space:pre;overflow-x:auto;tab-size:4">release   v0.5.0 (2026-11-05)
 done      M0 oracle harness (R 4.6.2)
 done      M1 parser + deparse: 842/842
-done      M2 slices 1-2: 94/210 prims
-          + 32 closures, 819/819 goldens
+done      M2 slices 1-3: 102/210 prims
+          + 94 closures, 1035/1035 goldens
+caveat    regex: not TRE (Go regexp)
 planned   M3 - M8 base ... CRAN
 goal      r cells in go-notebook
 oracle    GNU R 4.6.2, a black box
@@ -42,14 +43,14 @@ plan      github.com/go-scikit/roadmap</pre>
   </div></div>
 
   <div class="strip"><div class="wrap">
-    <span class="lead-line">{{ len .Site.Params.repos }} repositories — released <b>v0.4.0</b>: the oracle harness, the parser and deparse (M0 and M1 done) and slices 1 and 2 of M2, the evaluator; M3 to M8 are planned</span>
+    <span class="lead-line">{{ len .Site.Params.repos }} repositories — released <b>v0.5.0</b>: the oracle harness, the parser and deparse (M0 and M1 done) and slices 1 to 3 of M2, the evaluator; M3 to M8 are planned</span>
     <div class="mods">{{ range .Site.Params.repos }}<a href="{{ .href }}">{{ .name }}</a>{{ end }}</div>
   </div></div>
 
   <section id="scope"><div class="wrap">
     <span class="eyebrow">What it is</span>
     <h2>R's semantics, written in Go.</h2>
-    <p class="lead">What exists is a parser, an oracle harness and the first two slices of the evaluator. The rest is the plan of the roadmap's <a href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">bibliography</a>, not a result.</p>
+    <p class="lead">What exists is a parser, an oracle harness and the first three slices of the evaluator. The rest is the plan of the roadmap's <a href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">bibliography</a>, not a result.</p>
     <div class="grid">
       {{ range .Site.Params.scope }}
       <div class="card"><h3>{{ .name }}</h3><p>{{ .what | safeHTML }}</p></div>
@@ -60,7 +61,7 @@ plan      github.com/go-scikit/roadmap</pre>
   <section id="milestones" style="padding-top:10px"><div class="wrap">
     <span class="eyebrow">The plan</span>
     <h2>From an oracle to a playground.</h2>
-    <p class="lead">M0 and M1 are done, and M2 has slices 1 and 2 done. M3 to M8 are planned and not started.</p>
+    <p class="lead">M0 and M1 are done, and M2 has slices 1 to 3 done. M3 to M8 are planned and not started.</p>
     <div class="road">
       {{ range .Site.Params.milestones }}
       <div class="ph">
@@ -104,6 +105,6 @@ plan      github.com/go-scikit/roadmap</pre>
     </div>
   </div></section>
 
-  <footer><div class="wrap"><span>go-embedded-r · <a href="https://github.com/go-embedded-r">go-embedded-r on GitHub</a>{{ if not (partial "mantra-on.html" .) }} · BSD-3-Clause · CGO_ENABLED=0{{ end }}</span><span>v0.4.0 · M0, M1 done · M2 slices 1–2 done · M3 – M8 planned</span></div></footer>
+  <footer><div class="wrap"><span>go-embedded-r · <a href="https://github.com/go-embedded-r">go-embedded-r on GitHub</a>{{ if not (partial "mantra-on.html" .) }} · BSD-3-Clause · CGO_ENABLED=0{{ end }}</span><span>v0.5.0 · M0, M1 done · M2 slices 1–3 done · M3 – M8 planned</span></div></footer>
 </body>
 </html>
