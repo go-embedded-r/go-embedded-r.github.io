@@ -27,7 +27,7 @@ jobs:
       # A page that builds and says nothing is a page nobody notices is empty.
       - name: every repository is on it
         run: |
-          for repo in docs r; do
+          for repo in docs r tre; do
             grep -q "go-embedded-r/$repo" public/index.html \
               || { echo "::error::$repo is not on the page"; exit 1; }
           done
