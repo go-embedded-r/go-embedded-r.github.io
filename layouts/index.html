@@ -19,22 +19,22 @@
   <div class="hero"><div class="wrap">
     <div>
       <h1 class="head">R, embedded in Go.<br><span class="accent">Checked against GNU R 4.6.2, never against guesses.</span></h1>
-      <p class="sub">go-embedded-r is <b>in development</b>: <b>v0.8.1</b> (2026-11-07) completes milestones <b>M0</b> (the oracle harness, against GNU R 4.6.2), <b>M1</b> (the parser and <code>deparse</code>, package <code>syntax</code>), identical to R's tree, tokens and deparse output on 842 of 842 files of R's base packages, and <b>M2</b>: the evaluator (package <code>eval</code>) has 175 of R's 210 primitives and 110 base closures, and 1 202 of 1 202 goldens match R 4.6.2; the other 35 primitives (complex, raw, S4, formula and expression types, foreign calls, <code>.Internal</code>) are refused with an error that says why. <b>M3</b>, base R rewritten clean room, is <b>in progress</b>: 22.2 % of base's 1 362 exports agree with R 4.6.2 (19.8 % at v0.7.0, 14.4 % at v0.6.0), through our own clean-room base library (R glue plus Go natives). Regular expressions run on <a href="https://github.com/go-embedded-r/tre">go-embedded-r/tre</a>, a Go port of TRE with R's own quirks reproduced, and agree with R on 60 000 of 60 000 fuzz cases; <code>grepl</code> was 1.44 times slower than R when last measured (an open defect; tre v0.1.1 sped the engine up and the ratio is not yet re-measured). Patterns beyond tre's bounded compile limits are refused, which includes some extreme patterns R accepts. Since v0.4.0 a session is <b>bounded by default</b> (a breaking change): 30 000 000 steps, 16 GiB of cumulative allocation and 10 s per evaluation, with <code>eval.Unbounded</code> to opt out. Stats, graphics, the notebook bridge, the playground and CRAN ports (M4 to M8) are <b>planned</b>. R cells are live in go-notebook v0.8.0 and playground v0.9.0: parsed and checked, not run yet. It will be a pure-Go, embeddable R interpreter for the <code>r</code> cells of <a href="https://go-notebook.github.io/">go-notebook</a> and its WebAssembly playground, written clean-room under the BSD-3-Clause licence.</p>
+      <p class="sub">go-embedded-r is <b>in development</b>: <b>v0.10.0</b> (2026-11-07) completes milestones <b>M0</b> (the oracle harness, against GNU R 4.6.2), <b>M1</b> (the parser and <code>deparse</code>, package <code>syntax</code>), identical to R's tree, tokens and deparse output on 842 of 842 files of R's base packages, and <b>M2</b>: the evaluator (package <code>eval</code>) has 175 of R's 210 primitives and 110 base closures, and 1 302 of 1 302 goldens match R 4.6.2; the other 35 primitives (complex, raw, S4, formula and expression types, foreign calls, <code>.Internal</code>) are refused with an error that says why. <b>M3</b>, base R rewritten clean room, is <b>in progress</b>: 24.4 % of base's 1 362 exports agree with R 4.6.2 (23.3 % at v0.9.0, 22.2 % at v0.8.0, 19.8 % at v0.7.0, 14.4 % at v0.6.0), through our own clean-room base library (R glue plus Go natives), string and format functions, restarts and the call stack. Regular expressions run on <a href="https://github.com/go-embedded-r/tre">go-embedded-r/tre</a>, a Go port of TRE with R's own quirks reproduced, and agree with R on 60 000 of 60 000 fuzz cases; <code>grepl</code> was 1.44 times slower than R when last measured (an open defect; tre v0.1.1 sped the engine up and the ratio is not yet re-measured). Patterns beyond tre's bounded compile limits are refused, which includes some extreme patterns R accepts; in exchange every regex bomb test stays under 256 MiB on every target, wasm included. Since v0.4.0 a session is <b>bounded by default</b> (a breaking change): 30 000 000 steps, 16 GiB of cumulative allocation and 10 s per evaluation, with <code>eval.Unbounded</code> to opt out. Stats, graphics, the notebook bridge, the playground and CRAN ports (M4 to M8) are <b>planned</b>. R cells are live in go-notebook v0.8.0 and playground v0.9.0: parsed and checked, not run yet. It will be a pure-Go, embeddable R interpreter for the <code>r</code> cells of <a href="https://go-notebook.github.io/">go-notebook</a> and its WebAssembly playground, written clean-room under the BSD-3-Clause licence.</p>
       <div class="cta">
         <a class="btn btn-primary" href="https://go-embedded-r.github.io/docs/">{{ partial "icons/book.html" . }}Read the plan →</a>
         <a class="btn btn-ghost" href="https://github.com/go-scikit/roadmap/blob/main/bib/r.md">{{ partial "icons/github.html" . }}The plan in the roadmap →</a>
       </div>
-      <div class="trust"><span><b>v0.8.1</b>: M0, M1, M2 done</span><span><b>M3</b> in progress</span><span><b>M4 – M8</b> planned</span><span><b>pure Go</b></span></div>
+      <div class="trust"><span><b>v0.10.0</b>: M0, M1, M2 done</span><span><b>M3</b> in progress</span><span><b>M4 – M8</b> planned</span><span><b>pure Go</b></span></div>
     </div>
     <div class="term">
       <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span class="t">status</span></div>
-<pre style="white-space:pre;overflow-x:auto;tab-size:4">release   v0.8.1 (2026-11-07)
+<pre style="white-space:pre;overflow-x:auto;tab-size:4">release   v0.10.0 (2026-11-07)
 done      M0 oracle harness (R 4.6.2)
 done      M1 parser + deparse: 842/842
 done      M2 eval: 175/210 prims
-          + 110 closures, 1202/1202 goldens
+          + 110 closures, 1302/1302 goldens
 regex     TRE port: 60000/60000 fuzz
-now       M3 base R: 22.2% of exports
+now       M3 base R: 24.4% of exports
 planned   M4 - M8 stats ... CRAN
 goal      r cells in go-notebook
 oracle    GNU R 4.6.2, a black box
@@ -44,7 +44,7 @@ plan      github.com/go-scikit/roadmap</pre>
   </div></div>
 
   <div class="strip"><div class="wrap">
-    <span class="lead-line">{{ len .Site.Params.repos }} repositories — released <b>v0.8.1</b>: the oracle harness, the parser and deparse, and the evaluator (M0, M1 and M2 done); M3, base R, is in progress; M4 to M8 are planned</span>
+    <span class="lead-line">{{ len .Site.Params.repos }} repositories — released <b>v0.10.0</b>: the oracle harness, the parser and deparse, and the evaluator (M0, M1 and M2 done); M3, base R, is in progress; M4 to M8 are planned</span>
     <div class="mods">{{ range .Site.Params.repos }}<a href="{{ .href }}">{{ .name }}</a>{{ end }}</div>
   </div></div>
 
@@ -106,6 +106,6 @@ plan      github.com/go-scikit/roadmap</pre>
     </div>
   </div></section>
 
-  <footer><div class="wrap"><span>go-embedded-r · <a href="https://github.com/go-embedded-r">go-embedded-r on GitHub</a>{{ if not (partial "mantra-on.html" .) }} · BSD-3-Clause · CGO_ENABLED=0{{ end }}</span><span>v0.8.1 · M0, M1, M2 done · M3 in progress · M4 – M8 planned</span></div></footer>
+  <footer><div class="wrap"><span>go-embedded-r · <a href="https://github.com/go-embedded-r">go-embedded-r on GitHub</a>{{ if not (partial "mantra-on.html" .) }} · BSD-3-Clause · CGO_ENABLED=0{{ end }}</span><span>v0.10.0 · M0, M1, M2 done · M3 in progress · M4 – M8 planned</span></div></footer>
 </body>
 </html>
