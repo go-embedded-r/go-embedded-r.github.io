@@ -4,12 +4,12 @@ The go-embedded-r landing page (Hugo), served at <https://go-embedded-r.github.i
 The documentation is at <https://go-embedded-r.github.io/docs/> (repository
 [go-embedded-r/docs](https://github.com/go-embedded-r/docs)).
 
-The organization is **in development**. `go-embedded-r/r` v0.12.3 (2026-11-08)
+The organization is **in development**. `go-embedded-r/r` v0.13.1 (2026-11-09)
 completes milestones M0 (the oracle harness, against GNU R 4.6.2) and M1 (the
 parser and deparse, package `syntax`, identical to R's tree, tokens and deparse
 output on 842 of 842 files of R's base packages) and M2 (the evaluator, 175 of 210
 primitives and 110 base closures; regex on go-embedded-r/tre, a port of TRE); M3 (base R)
-is in progress (33.9 % of base's exports agree with R) and M4 to M8 are planned, and the page says so. It
+is in progress (37.7 % of base's exports agree with R) and M4 to M8 are planned, and the page says so. It
 gives what exists, the milestones, the parity table of the parser and the
 clean-room rule (R is an oracle, never a source; BSD-3-Clause). Its statements
 come from the README of go-embedded-r/r on main and its `docs/m2-design.md`, and from the plan it links,
