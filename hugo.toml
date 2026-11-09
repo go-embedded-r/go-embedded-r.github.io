@@ -16,16 +16,16 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
     path = "github.com/go-fleettools/landingkit"
 
 [params]
-  description = "go-embedded-r (in development, r v0.12.2: milestones M0, the oracle harness, M1, the parser with deparse, and M2, the evaluator, are done; M3, base R, is in progress, 33.9 % of base's exports agreeing with R; M4 to M8 are planned): an R interpreter in pure Go that can be embedded, for the r cells of go-notebook and its WebAssembly playground."
+  description = "go-embedded-r (in development, r v0.12.3: milestones M0, the oracle harness, M1, the parser with deparse, and M2, the evaluator, are done; M3, base R, is in progress, 33.9 % of base's exports agreeing with R; M4 to M8 are planned): an R interpreter in pure Go that can be embedded, for the r cells of go-notebook and its WebAssembly playground."
 
 # Every field below is rendered by layouts/index.html. A field nothing renders
 # does not stay true. Every statement is from the README of go-embedded-r/r at
-# main (v0.12.2), docs/m2-design.md and docs/m3-plan.md, and from the plan it links, bib/r.md (go-scikit/roadmap).
+# main (v0.12.3), docs/m2-design.md and docs/m3-plan.md, and from the plan it links, bib/r.md (go-scikit/roadmap).
 [[params.repos]]
   name  = "r"
   kind  = "source"
   href  = "https://github.com/go-embedded-r/r"
-  blurb = "The interpreter, <code>github.com/go-embedded-r/r</code>, released as v0.12.2 (2026-11-08): M0, the oracle harness against GNU R 4.6.2 (<code>internal/oracle</code>, <code>cmd/roracle</code>, the <code>rds</code> serialization reader and writer, golden files), M1, the parser and <code>deparse</code> (package <code>syntax</code>), and M2, the evaluator (package <code>eval</code>, 175 of 210 primitives, regular expressions on the tre module). M3, base R, is in progress (33.9 % of base's exports agree with R; slices 5 to 9: vectors, strings, conditions and the call stack, environments and namespaces, dates and times). Everything after is planned."
+  blurb = "The interpreter, <code>github.com/go-embedded-r/r</code>, released as v0.12.3 (2026-11-08): M0, the oracle harness against GNU R 4.6.2 (<code>internal/oracle</code>, <code>cmd/roracle</code>, the <code>rds</code> serialization reader and writer, golden files), M1, the parser and <code>deparse</code> (package <code>syntax</code>), and M2, the evaluator (package <code>eval</code>, 175 of 210 primitives, regular expressions on the tre module). M3, base R, is in progress (33.9 % of base's exports agree with R; slices 5 to 9: vectors, strings, conditions and the call stack, environments and namespaces, dates and times). Everything after is planned."
 [[params.repos]]
   name  = "tre"
   kind  = "library"
@@ -55,13 +55,13 @@ disableKinds = ['taxonomy', 'term', 'rss', 'sitemap', '404']
   what = "Package <code>syntax</code>: lexer, parser, an AST with a source map, the tokens of <code>getParseData()</code>, R's own parse errors byte for byte, <code>Deparse</code>, and <code>TopLevelNames</code>, which names what a cell assigns and reads."
 [[params.scope]]
   name = "A complete evaluator, base R started"
-  what = "Package <code>eval</code> (v0.12.2): 175 of R's 210 primitives and 110 base closures plus a base library, string functions, restarts, the call stack, locked and active bindings, a one-namespace model for base (no package loading), and <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code> and <code>difftime</code> with time zones from Go's embedded IANA database, with replacement, subsetting, attributes, S3 dispatch, conditions, <code>print</code>, environments, the apply family, strings, regular expressions, the math group and factors, judged by the oracle (2 028 of 2 028 goldens, 9 of them macOS-only). Its API, <code>eval.NewSession</code> and <code>Eval</code>, is bounded by default since v0.4.0 (30 000 000 steps, 16 GiB of cumulative allocation, 10 s; <code>eval.Unbounded</code> opts out), a breaking change."
+  what = "Package <code>eval</code> (v0.12.3): 175 of R's 210 primitives and 110 base closures plus a base library, string functions, restarts, the call stack, locked and active bindings, a one-namespace model for base (no package loading), and <code>Date</code>, <code>POSIXct</code>, <code>POSIXlt</code> and <code>difftime</code> with time zones from Go's embedded IANA database, with replacement, subsetting, attributes, S3 dispatch, conditions, <code>print</code>, environments, the apply family, strings, regular expressions, the math group and factors, judged by the oracle (2 028 of 2 028 goldens, 9 of them macOS-only). Its API, <code>eval.NewSession</code> and <code>Eval</code>, is bounded by default since v0.4.0 (30 000 000 steps, 16 GiB of cumulative allocation, 10 s; <code>eval.Unbounded</code> opts out), a breaking change."
 [[params.scope]]
   name = "The serialization format"
   what = "<code>rds</code> reads and writes R's serialization format (XDR, versions 2 and 3, gzip or bzip2): a decoded value encodes back to the same bytes. The decoder is built for untrusted input and fuzzed."
 [[params.scope]]
   name = "Clean room, BSD-3-Clause"
-  what = "R's sources are GPL-2-or-later. R is an oracle, never a source: no R source file, test file, help page or transcript is copied here, and base R's R code is rewritten from the documented behaviour, not copied. Since v0.12.2 a similarity checker (token winnowing, calibrated on independent code) gates every file of the base library in CI, the oracle refuses to print base closures, and every change records its provenance. The gate is a floor, not proof."
+  what = "R's sources are GPL-2-or-later. R is an oracle, never a source: no R source file, test file, help page or transcript is copied here, and base R's R code is rewritten from the documented behaviour, not copied. Since v0.12.2 a similarity checker (token winnowing, calibrated on independent code) gates every file of the base library in CI, the oracle refuses to print base closures or any copy of one (since v0.12.3, at any size), and every change records its provenance. The gate is a floor, not proof."
 
 # The cards of #milestones, in order. state is "done" or "planned".
 [[params.milestones]]
