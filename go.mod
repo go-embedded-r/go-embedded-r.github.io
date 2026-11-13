@@ -2,4 +2,4 @@ module github.com/go-embedded-r/go-embedded-r.github.io
 
 go 1.27.4
 
-require github.com/go-fleettools/landingkit v0.22.0
+require github.com/go-fleettools/landingkit v0.26.0
