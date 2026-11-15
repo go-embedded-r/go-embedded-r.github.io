@@ -7,7 +7,7 @@ The documentation is at <https://go-embedded-r.github.io/docs/> (repository
 The organization is **in development**. `go-embedded-r/r` v0.19.0 (2026-11-15)
 completes milestones M0 (the oracle harness, against GNU R 4.6.2) and M1 (the
 parser and deparse, package `syntax`, identical to R's tree, tokens and deparse
-output on 842 of 842 files of R's base packages) and M2 (the evaluator, 183 of 210
+output on 842 of 842 files of R's base packages) and M2 (the evaluator, 184 of 210
 primitives and 110 base closures; regex on go-embedded-r/tre, a port of TRE); M3 (base R)
 is in progress (66.4 % of base's exports agree with R) and M4 to M8 are planned, and the page says so. It
 gives what exists, the milestones, the parity table of the parser and the
